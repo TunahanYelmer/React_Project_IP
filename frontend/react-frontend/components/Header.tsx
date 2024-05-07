@@ -4,9 +4,9 @@ interface Props {}
 
 const Header: React.FC<Props> = () => {
   return (
-    <header className=" flex flex-row ">
-      <div className="flex justify-center items-center">
-        <nav className="container mx-auto px-4 py-2.5 w-full h-auto flex-grow">
+    <header className="  bg-red-500 ">
+      <div className="flex justify-center items-center  ">
+        <nav className="container mx-auto px-4 py-2.5 w-full h-auto flex flex-row">
           <a
             className=" flex items-center text-2xl font-bold   lg:w-auto mr-4 md:w-1/5 w-1/12"
             href="/"

@@ -1,5 +1,6 @@
 
 import Image from "next/image";
+import './globals.css';
 import Header from "../../components/Header";
 import Slider from "../../components/Slider";
 import Client from "../../components/Client";
