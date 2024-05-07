@@ -4,7 +4,7 @@ interface Props {}
 
 const Header: React.FC<Props> = () => {
   return (
-    <header className="  bg-red-500 ">
+    <header className="flex flex-row bg-transparent">
       <div className="flex justify-center items-center  ">
         <nav className="container mx-auto px-4 py-2.5 w-full h-auto flex flex-row">
           <a
@@ -14,7 +14,7 @@ const Header: React.FC<Props> = () => {
             <span>Seotech</span>
           </a>
           <button
-            className="  lg:hidden cursor-pointer flex items-center px-4 py-2 border border-transparent  rounded-md leading-5 font-medium focus:outline-none transition"
+            className="   cursor-pointer flex items-center px-4 py-2 border border-transparent  rounded-md leading-5 font-medium focus:outline-none transition"
           >
           </button>
           <div

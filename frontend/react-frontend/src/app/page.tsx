@@ -1,6 +1,5 @@
 
 import Image from "next/image";
-import './globals.css';
 import Header from "../../components/Header";
 import Slider from "../../components/Slider";
 import Client from "../../components/Client";
@@ -13,15 +12,15 @@ import Footer from "../../components/Footer";
 
 export default function Home() {
   return (
-  <main>
-    <div className=" bg-white text-black  flex flex-col">
-    <Header/>
-    <Slider/>
-    <Team/>
-    <Work/>
-    <Info/>
-    <Footer/>
+
+    <div className="">
+      <Header />
+      <Slider />
+      <Team />
+      <Work />
+      <Info />
+      <Footer />
     </div>
-  </main>
+
   );
 }
