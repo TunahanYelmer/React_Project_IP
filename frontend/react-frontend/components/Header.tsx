@@ -1,62 +1,88 @@
-import React from 'react';
+"use client";
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import callIcon from "../static/images/call.png";
+import { useDataLayerValue } from "../context/DataContext";
 
 const Header = () => {
+  const { state, dispatch } = useDataLayerValue(); // Destructure state and dispatch from the context value object
+
+  const handleRouteOnClick = (route: string) => {
+    dispatch({
+      type: "SET_ROUTE",
+      route: route,
+    });
+  };
+
   return (
-    <header className="flex flex-row justify-between items-center w-full bg-black text-white">
-      <div className="flex justify-start">
-        <a
-          className="flex items-center text-2xl font-bold"
-          href="/"
-        >
-          <span>Seotech</span>
-        </a>
+    <header className="flex flex-row justify-between items-center w-full p-3 text-white">
+      <div className="justify-start">
+        <Link href={"/"}>
+          <span className="text-3xl font-sans font-bold">Seotech</span>
+        </Link>
       </div>
-      <div className="flex justify-center items-center w-full max-w-screen-xl mx-auto">
-        <ul className="flex justify-between items-center mx-8 flex-grow">
-          <li className="hover:bg-custom-yellow">
-            <button className="flex bg-red-500 rounded-md p-2 w-full">
-              <span>Home</span>
+      <div className="flex justify-center items-center">
+        <ul className="flex justify-center mx-8">
+          <Link href={"/"}>
+            <li className="mx-4 my-3">
+              <button
+                className={`flex rounded-full ${
+                  state.route === "Home"
+                    ? "bg-custom-yellow"
+                    : "hover:bg-custom-yellow"
+                } p-2`}
+                onClick={() => handleRouteOnClick("Home")}
+              >
+                <span>Home</span>
+              </button>
+            </li>
+          </Link>
+          <Link href={"/about"}>
+            <li className="mx-4 my-3">
+              <button
+                className={`flex rounded-full ${
+                  state.route === "About"
+                    ? "bg-custom-yellow"
+                    : "hover:bg-custom-yellow"
+                } p-2`}
+                onClick={() => handleRouteOnClick("About")}
+              >
+                <span>About</span>
+              </button>
+            </li>
+          </Link>
+          <Link href={"/service"}>
+            <li className="mx-4 my-3">
+              <button
+                className={`flex rounded-full ${
+                  state.route === "Service"
+                    ? "bg-custom-yellow"
+                    : "hover:bg-custom-yellow"
+                } p-2`}
+                onClick={() => handleRouteOnClick("Service")}
+              >
+                <span>Service</span>
+              </button>
+            </li>
+          </Link>
+          <li className="mx-4 my-3">
+            <button className="flex rounded-full hover:bg-custom-yellow p-2">
+              <span>Contact Us</span>
             </button>
-          </li>
-          <li className="hover:bg-custom-yellow">
-            <a className="" href="/about">
-              About
-            </a>
-          </li>
-          <li className=' hover:bg-custom-yellow'>
-            <a className="" href="/services">
-              Services
-            </a>
-          </li>
-          <li className='bg-custom-yellow'>
-            <a className="" href="#contactLink">
-              Contact Us
-            </a>
           </li>
         </ul>
-        <div className="flex items-center">
-          <a className="" href="tel:+011234567890">
-            <img
-              src="/images/call.png"
-              alt="Call"
-              className="w-6 h-6 mr-4"
-            />
-            <span>Call : +01 1234567890</span>
-          </a>
-          <form>
-            <input
-              type="text"
-              className="border border-white rounded-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Search"
-            />
-            <button
-              className="bg-white border border-white rounded-full py-2 px-4 ml-2 font-bold transition hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-              type="submit"
-            >
-              {/* Add search icon here */}
-            </button>
-          </form>
-        </div>
+      </div>
+      <div className="flex justify-end items-center">
+        <span className="mr-2">Call :</span>
+        <span className="mr-2 truncate">+01 1234567890</span>
+        <Image
+          src={callIcon}
+          height={15}
+          width={15}
+          alt="telephone Icon"
+          className="mr-2"
+        />
       </div>
     </header>
   );

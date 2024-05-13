@@ -12,7 +12,7 @@ interface ClientProps {
 
 const Client: React.FC<ClientProps> = ({ clients, heading, paragraph }) => {
   return (
-    <section className="client_section bg-gray-100 px-8 py-12">
+    <section className=" bg-gray-100 px-8 py-12">
       <div className="container mx-auto">
         <div className="heading_container">
           <h2 className="text-3xl font-medium mb-4">{heading}</h2>

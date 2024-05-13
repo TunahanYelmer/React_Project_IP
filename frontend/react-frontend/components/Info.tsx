@@ -1,118 +1,110 @@
-import React from 'react';
+"use client";
+import React from "react";
+import Image from "next/image";
+import { useDataLayerValue } from "../context/DataContext";
+import whiteTelephone from "/static/images/telephone-white.png";
+import envelopWhite from "/static/images/envelope-white.png";
+import infoYoutube from "/static/images/info-youtube.png";
+import infoLinkedin from "/static/images/info-linkedin.png";
+import infoTwitter from "/static/images/info-twitter.png";
+import infoFb from "/static/images/info-fb.png";
 
 interface InfoProps {}
 
 const Info: React.FC<InfoProps> = () => {
+  const { state, dispatch } = useDataLayerValue();
+
   return (
-    <section className="info_section bg-gray-800 py-12">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="col-span-1 md:col-span-2">
-            <div className="info_logo">
-              <h3 className="text-white">Seotech</h3>
-              <p className="text-gray-300">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna
-              </p>
-            </div>
-            <div className="info_links">
-              <h4 className="text-white">BASIC LINKS</h4>
-              <ul className="list-unstyled">
-                <li className="active">
-                  <a className="text-white" href="/">
-                    Home <span className="sr-only">(current)</span>
-                  </a>
-                </li>
-                <li>
-                  <a className="text-white" href="/about">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a className="text-white" href="/services">
-                    Services
-                  </a>
-                </li>
-                <li>
-                  <a className="text-white" href="/contact">
-                    Contact Us
-                  </a>
-                </li>
-              </ul>
-            </div>
+    <section className="container mx-auto flex flex-col md:flex-row  sm:item-center  justify-between py-4">
+      <div className=" md:w-1/4">
+        <div className="  max-w-64">
+          <h3 className="font-bold text-3xl">SEOTECH</h3>
+          <p>
+            It is a long established fact that a reader will be distracted by
+            the readable content of a page when looking
+          </p>
+        </div>
+      </div>
+      <div className=" justify-center md:w-1/4">
+        <h4 className="text-2xl ">Basic Links</h4>
+        <ul className="text-base text-left">
+          <li className="flex items-center  mb-2">
+            <h1
+              className={`w-4 h-4 rounded-full ${
+                state.route === "Home" ? "bg-custom-yellow p-1" : ""
+              }`}
+            ></h1>
+            Home
+          </li>
+          <li className="flex items-center  mb-2">
+            <h2
+              className={`w-4 h-4 rounded-full ${
+                state.route === "About" ? "bg-custom-yellow" : ""
+              }`}
+            ></h2>
+            About
+          </li>
+          <li className="flex items-center  mb-2">
+            <h3
+              className={`w-4 h-4 rounded-full ${
+                state.route === "Service" ? "bg-custom-yellow p-1" : ""
+              }`}
+            ></h3>
+            Services
+          </li>
+          <li className="flex items-center  mb-2">
+            <h4 className="w-4 h-4 rounded-full "></h4> Contact
+          </li>
+        </ul>
+      </div>
+      <div className="md:w-1/4">
+        <h5 className="text-2xl mb-4">Contact Details</h5>
+        <div className="flex m-2">
+          <Image src={whiteTelephone} height={15} width={15} alt="" />
+          <p></p>
+        </div>
+        <div className="flex m-2">
+          <Image src={envelopWhite} height={20} width={20} alt="" />
+          <p></p>
+        </div>
+      </div>
+      <div className="md:w-1/4">
+        <h6 className="text-2xl mb-4">NEWSLETTER</h6>
+        <div className="  max-w-64">
+          {" "}
+          <div className="">
+            <input
+              className="bg-custom-blue border p-2 w-full placeholder:Email placeholder-gray-500"
+              placeholder="Email"
+            ></input>
           </div>
-          <div className="col-span-1 md:col-span-1">
-            <div className="info_contact">
-              <h4 className="text-white">CONTACT DETAILS</h4>
-              <a href="tel:+011234567890">
-                <div className="flex items-center mb-2">
-                  <img
-                    src="/images/telephone-white.png"
-                    width="12px"
-                    alt=""
-                  />
-                  <p className="text-gray-300 ml-2">
-                    +01 1234567890
-                  </p>
-                </div>
-              </a>
-              <a href="mailto:demo@gmail.com">
-                <div className="flex items-center mb-2">
-                  <img
-                    src="/images/envelope-white.png"
-                    width="18px"
-                    alt=""
-                  />
-                  <p className="text-gray-300 ml-2">
-                    demo@gmail.com
-                  </p>
-                </div>
-              </a>
-            </div>
+          <div className="flex bg-custom-yellow  items-center mt-4 justify-center text-center rounded-md">
+            <button className="p-2 text-center" type="submit">
+              SUBSCRIBE
+            </button>
           </div>
-          <div className="col-span-1 md:col-span-1">
-            <div className="info_form">
-              <h4 className="text-white">NEWSLETTER</h4>
-              <form action="">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="bg-gray-700 text-white rounded-md py-2 px-3 mb-2 w-full"
-                />
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white py-2 px-3 rounded-md w-full"
-                >
-                  Subscribe
-                </button>
-              </form>
-              <div className="social_box mt-4">
-                <a href="">
-                  <img
-                    src="/images/info-fb.png"
-                    alt=""
-                  />
-                </a>
-                <a href="">
-                  <img
-                    src="/images/info-twitter.png"
-                    alt=""
-                  />
-                </a>
-                <a href="">
-                  <img
-                    src="/images/info-linkedin.png"
-                    alt=""
-                  />
-                </a>
-                <a href="">
-                  <img
-                    src="/images/info-youtube.png"
-                    alt=""
-                  />
-                </a>
-              </div>
-            </div>
+        </div>
+
+        <div className=" item-center flex m-5">
+          <div className="flex p-2">
+            <a>
+              <Image src={infoFb} height={20} width={30} alt="" />
+            </a>
+          </div>
+          <div className="flex p-2">
+            <a>
+              <Image src={infoTwitter} height={20} width={30} alt="" />
+            </a>
+          </div>
+          <div className="flex p-2">
+            <a>
+              <Image src={infoLinkedin} height={20} width={30} alt="" />
+            </a>
+          </div>
+          <div className="flex p-2">
+            <a>
+              <Image src={infoYoutube} height={20} width={30} alt="" />
+            </a>
           </div>
         </div>
       </div>
