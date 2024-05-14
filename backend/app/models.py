@@ -3,7 +3,6 @@ import datetime
 from db import init_db
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
 from db import init_db
 
 

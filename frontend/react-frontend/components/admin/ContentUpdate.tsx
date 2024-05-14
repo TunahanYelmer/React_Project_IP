@@ -1,93 +1,322 @@
-import React from "react";
+"use client"
+import React, { useState, useEffect } from 'react';
+import { useDataLayerValue } from '../../context/DataContext';
+import Link from 'next/link';
 
-interface AdminTableProps {
-  title: string;
-  headings: string[];
-  data: { [key: string]: string }[];
-  addUrl: string;
-  deleteUrl: string;
-}
+import { fetchAboutData, fetchClientData, fetchContactData, fetchCustomerData, fetchFooterData, fetchNewsletterData, fetchServiceData, fetchSliderData, fetchTeamData, fetchWorkData } from '../../api/api';
 
-const AdminTable: React.FC<AdminTableProps> = ({
-  title,
-  headings,
-  data,
-  addUrl,
-  deleteUrl,
-}) => {
+const AdminPanel = () => {
+  const { state, dispatch } = useDataLayerValue();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      fetchAboutData(dispatch)
+      fetchClientData(dispatch)
+      fetchContactData(dispatch)
+      fetchNewsletterData(dispatch)
+      fetchServiceData(dispatch)
+      fetchSliderData(dispatch)
+      fetchFooterData(dispatch)
+      fetchTeamData(dispatch)
+      fetchWorkData(dispatch)
+
+
+
+    };
+    fetchData();
+  }, []);
+  const handleDeleteAbout = () => {
+
+  }
+  const handleDeleteClient = () => {
+
+  }
+  const handleDeleteContact = () => {
+
+  }
+  const handleDeleteNewletter = () => {
+
+  }
+  const handleDeleteService = () => {
+
+  }
+  const handleDeleteSlider = () => {
+
+  }
+  const handleDeleteFooter = () => {
+
+  }
+  const handleDeleteTeam = () => {
+
+  }
+  const handleDeleteWork = () => {
+
+  }
+
+
+
+
+  // Repeat the above add, update, and delete functions for the other interfaces
+
   return (
-    <div className="admin-div">
-      <h2 className="admin-h2">{title}</h2>
-      <table className="admin-table">
+    <div>
+      <h1>Admin Panel</h1>
+
+
+      <h2> Edit About</h2>
+      <Link href={"/admin/contentUpdate/ContentUpdateAbout/ContentUpdateAboutUpdate"}> <button>
+        Add About
+      </button></Link>
+
+      <table>
         <thead>
           <tr>
-            {headings.map((heading, index) => (
-              <th key={index}>{heading}</th>
-            ))}
-            <th></th>
+            <th>Title</th>
+            <th>Descirption</th>
+            <th>Read</th>
+            <th>İmage</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
-            <tr key={Object.values(item).join("")}>
-              {Object.keys(item).map((key, index) => (
-                <td key={index}>{item[key]}</td>
-              ))}
+          {state.aboutArray.map((about, index) => (
+            <tr key={index}>
+              <td>{about.title}</td>
+              <td>{about.description}</td>
+              <td>{about.read}</td>
+              <td>{about.image}</td>
+
               <td>
-                <form
-                  action={deleteUrl.replace(":id", String(item.id))}
-                  method="POST"
-                >
-                  <button className="admin-button delete-button" type="submit">
-                    Delete
-                  </button>
-                </form>
+                <Link href={"/admin/contentUpdate/ContentUpdateAbout/ContentUpdateAboutAdd"}> <button >Update</button></Link>
+                <Link><button >Delete</button></Link>
+               
+                
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <form action={addUrl} method="POST">
-        <button className="admin-button add-button" type="submit">
-          Add
-        </button>
-      </form>
+
+      <h2>Customers</h2>
+      <button onClick={() => addCustomer({ name: '', email: '', subject: '', message: '', dateOfRegister: new Date() })}>
+        Add Customer
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date of Register</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {customers.map((customer) => (
+            <tr key={customer.id}>
+              <td>{customer.name}</td>
+              <td>{customer.email}</td>
+              <td>{customer.subject}</td>
+              <td>{customer.message}</td>
+              <td>{customer.dateOfRegister.toLocaleDateString()}</td>
+              <td>
+                <button onClick={() => updateCustomer(customer)}>Update</button>
+                <button onClick={() => deleteCustomer(customer.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2>Customers</h2>
+      <button onClick={() => addCustomer({ name: '', email: '', subject: '', message: '', dateOfRegister: new Date() })}>
+        Add Customer
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date of Register</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {customers.map((customer) => (
+            <tr key={customer.id}>
+              <td>{customer.name}</td>
+              <td>{customer.email}</td>
+              <td>{customer.subject}</td>
+              <td>{customer.message}</td>
+              <td>{customer.dateOfRegister.toLocaleDateString()}</td>
+              <td>
+                <button onClick={() => updateCustomer(customer)}>Update</button>
+                <button onClick={() => deleteCustomer(customer.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h2>Customers</h2>
+      <button onClick={() => addCustomer({ name: '', email: '', subject: '', message: '', dateOfRegister: new Date() })}>
+        Add Customer
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date of Register</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {customers.map((customer) => (
+            <tr key={customer.id}>
+              <td>{customer.name}</td>
+              <td>{customer.email}</td>
+              <td>{customer.subject}</td>
+              <td>{customer.message}</td>
+              <td>{customer.dateOfRegister.toLocaleDateString()}</td>
+              <td>
+                <button onClick={() => updateCustomer(customer)}>Update</button>
+                <button onClick={() => deleteCustomer(customer.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h2>Customers</h2>
+      <button onClick={() => addCustomer({ name: '', email: '', subject: '', message: '', dateOfRegister: new Date() })}>
+        Add Customer
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date of Register</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {customers.map((customer) => (
+            <tr key={customer.id}>
+              <td>{customer.name}</td>
+              <td>{customer.email}</td>
+              <td>{customer.subject}</td>
+              <td>{customer.message}</td>
+              <td>{customer.dateOfRegister.toLocaleDateString()}</td>
+              <td>
+                <button onClick={() => updateCustomer(customer)}>Update</button>
+                <button onClick={() => deleteCustomer(customer.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h2>Customers</h2>
+      <button onClick={() => addCustomer({ name: '', email: '', subject: '', message: '', dateOfRegister: new Date() })}>
+        Add Customer
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date of Register</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {customers.map((customer) => (
+            <tr key={customer.id}>
+              <td>{customer.name}</td>
+              <td>{customer.email}</td>
+              <td>{customer.subject}</td>
+              <td>{customer.message}</td>
+              <td>{customer.dateOfRegister.toLocaleDateString()}</td>
+              <td>
+                <button onClick={() => updateCustomer(customer)}>Update</button>
+                <button onClick={() => deleteCustomer(customer.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h2>Customers</h2>
+      <button onClick={() => addCustomer({ name: '', email: '', subject: '', message: '', dateOfRegister: new Date() })}>
+        Add Customer
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date of Register</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {customers.map((customer) => (
+            <tr key={customer.id}>
+              <td>{customer.name}</td>
+              <td>{customer.email}</td>
+              <td>{customer.subject}</td>
+              <td>{customer.message}</td>
+              <td>{customer.dateOfRegister.toLocaleDateString()}</td>
+              <td>
+                <button onClick={() => updateCustomer(customer)}>Update</button>
+                <button onClick={() => deleteCustomer(customer.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h2>Customers</h2>
+      <button onClick={() => addCustomer({ name: '', email: '', subject: '', message: '', dateOfRegister: new Date() })}>
+        Add Customer
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date of Register</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {customers.map((customer) => (
+            <tr key={customer.id}>
+              <td>{customer.name}</td>
+              <td>{customer.email}</td>
+              <td>{customer.subject}</td>
+              <td>{customer.message}</td>
+              <td>{customer.dateOfRegister.toLocaleDateString()}</td>
+              <td>
+                <button onClick={() => updateCustomer(customer)}>Update</button>
+                <button onClick={() => deleteCustomer(customer.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {/* Repeat the above table and button code for the other interfaces */}
     </div>
   );
 };
 
-const AdminContent: React.FC = () => {
-  const sliderData = [
-    { title: "Slider 1", description: "Desc 1", contact_link: "Link 1", image: "Img 1", quote_link: "Quote 1", id: 1 },
-    // Add more data here...
-  ];
-
-  const serviceData = [
-    { title: "Service 1", description: "Desc 1", image: "Img 1", read: "Read 1", service_title: "Service Title 1", service_description: "Service Description 1", id: 1 },
-    // Add more data here...
-  ];
-
-  // Add more data arrays for other entities like About, Work, Team, Client, Contact, and Footer
-
-  return (
-    <>
-      <AdminTable
-        title="Sliders"
-        headings={["Title", "Description", "Contact_Link", "Image", "Quote_Link"]}
-        data={sliderData}
-        addUrl="/admin/content/update/slider"
-        deleteUrl="/admin/delete/slider/:id"
-      />
-      <AdminTable
-        title="Service"
-        headings={["Title", "Description", "Image", "Read", "Service_Title", "Service_Description"]}
-        data={serviceData}
-        addUrl="/admin/content/update/service"
-        deleteUrl="/admin/delete/service/:id"
-      />
-      {/* Add other AdminTable components for other entities */}
-    </>
-  );
-};
-
-export default AdminContent;
+export default AdminPanel;

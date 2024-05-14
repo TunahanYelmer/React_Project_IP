@@ -14,6 +14,12 @@ const Header = () => {
       route: route,
     });
   };
+  const scrollToContact = () => {
+    const contactSection = document.getElementById("contact-section");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <header className="flex flex-row justify-between items-center w-full p-3 text-white">
@@ -67,7 +73,7 @@ const Header = () => {
             </li>
           </Link>
           <li className="mx-4 my-3">
-            <button className="flex rounded-full hover:bg-custom-yellow p-2">
+            <button className="flex rounded-full hover:bg-custom-yellow p-2" onClick={scrollToContact}>
               <span>Contact Us</span>
             </button>
           </li>

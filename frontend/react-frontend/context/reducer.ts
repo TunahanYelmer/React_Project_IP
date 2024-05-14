@@ -1,19 +1,20 @@
+import { ObjectId } from "mongodb";
 export interface State {
   route: string;
-  Customer: Customer;
-  NewsLetter: NewsLetter;
-  Slider: Slider;
-  About: About;
-  Service: Service;
-  Work: Work;
-  Team: Team;
-  Client: Client;
-  Contact: Contact;
-  Footer: Footer;
-  User: User;
+  customerArray: Customer[];
+  newsLetterArray: NewsLetter[];
+  sliderArray: Slider[];
+  aboutArray: About[];
+  serviceArray: Service[];
+  workArray: Work[];
+  teamArray: Team[];
+  clientArray: Client[];
+  contactArray: Contact[];
+  footerArray: Footer[];
 }
 
 export interface Customer {
+  _id: ObjectId
   name: string;
   email: string;
   subject: string;
@@ -22,11 +23,13 @@ export interface Customer {
 }
 
 export interface NewsLetter {
+  _id: ObjectId
   email: string;
   dateOfRegister: Date;
 }
 
 export interface Slider {
+  _id: ObjectId
   title: string;
   description: string;
   contact_link: string;
@@ -35,6 +38,7 @@ export interface Slider {
 }
 
 export interface About {
+  _id: ObjectId
   title: string;
   description: string;
   read: string;
@@ -42,6 +46,7 @@ export interface About {
 }
 
 export interface Service {
+  _id: ObjectId
   title: string;
   description: string;
   service_title: string;
@@ -51,6 +56,7 @@ export interface Service {
 }
 
 export interface Work {
+  _id: ObjectId
   title: string;
   description: string;
   service_title: string;
@@ -60,6 +66,7 @@ export interface Work {
 }
 
 export interface Team {
+  _id: ObjectId
   name: string;
   description: string;
   image: string;
@@ -70,17 +77,20 @@ export interface Team {
 }
 
 export interface Client {
+  _id: ObjectId
   name: string;
   description: string;
   image: string;
 }
 
 export interface Contact {
+  _id: ObjectId
   telephone: string;
   email: string;
 }
 
 export interface Footer {
+  _id: ObjectId
   link_facebook: string;
   link_twitter: string;
   link_linkedin: string;
@@ -88,6 +98,7 @@ export interface Footer {
 }
 
 export interface User {
+  _id: ObjectId
   username: string;
   passwrdhash: string;
   email: string;
@@ -98,84 +109,32 @@ export interface User {
 
 export const initialState: State = {
   route: "Home",
-  Customer: {
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-    dateOfRegister: new Date(),
-  },
-  NewsLetter: {
-    email: "",
-    dateOfRegister: new Date(),
-  },
-  Slider: {
-    title: "",
-    description: "",
-    contact_link: "",
-    quote_link: "",
-    image: "",
-  },
-  About: {
-    title: "",
-    description: "",
-    read: "",
-    image: "",
-  },
-  Service: {
-    title: "",
-    description: "",
-    service_title: "",
-    service_description: "",
-    read: "",
-    image: "",
-  },
-  Work: {
-    title: "",
-    description: "",
-    service_title: "",
-    service_description: "",
-    read: "",
-    image: "",
-  },
-  Team: {
-    name: "",
-    description: "",
-    image: "",
-    link_fb: "",
-    link_tw: "",
-    link_linkedin: "",
-    link_insta: "",
-  },
-  Client: {
-    name: "",
-    description: "",
-    image: "",
-  },
-  Contact: {
-    telephone: "",
-    email: "",
-  },
-  Footer: {
-    link_facebook: "",
-    link_twitter: "",
-    link_linkedin: "",
-    link_youtube: "",
-  },
-  User: {
-    username: "",
-    passwrdhash: "",
-    email: "",
-    name: "",
-    is_admin: false,
-    dateOfRegister: new Date(),
-  },
+  customerArray: [{_id:new ObjectId, name: "", email: "", subject: "", message: "", dateOfRegister: new Date() }],
+  newsLetterArray: [{_id:new ObjectId, email: "", dateOfRegister: new Date() }],
+  sliderArray: [{_id:new ObjectId, title: "", description: "", contact_link: "", quote_link: "", image: "" }],
+  aboutArray: [{_id:new ObjectId, title: "", description: "", read: "", image: "" }],
+  serviceArray: [{_id:new ObjectId, title: "", description: "", service_title: "", service_description: "", read: "", image: "" }],
+  workArray: [{ _id:new ObjectId,title: "", description: "", service_title: "", service_description: "", read: "", image: "" }],
+  teamArray: [{_id:new ObjectId, name: "", description: "", image: "", link_fb: "", link_tw: "", link_linkedin: "", link_insta: "" }],
+  clientArray: [{_id:new ObjectId, name: "", description: "", image: "" }],
+  contactArray: [{_id:new ObjectId, telephone: "", email: "" }],
+  footerArray: [{_id:new ObjectId, link_facebook: "", link_twitter: "", link_linkedin: "", link_youtube: "" }],
 };
 
 
 export interface Action {
   type: string;
   route?: string;
+  customerArray : Customer[]
+  newLetterArray: NewsLetter[]
+  sliderArray : Slider[]
+  aboutArray : About[]
+  serviceArray : Service[]
+  workArray : Work[]
+  teamArray : Team[]
+  clientArray : Client[]
+  contactArray : Contact[]
+  footerArray : Footer[] 
   // Add more properties as needed for other actions
 }
 
@@ -187,6 +146,47 @@ const reducer = (state: State = initialState, action: Action): State => {
         ...state,
         route: action.route || initialState.route,
       };
+    case "SET_CUSTOMER":
+      return{ ...state, 
+        customerArray: action.customerArray
+      }
+    case "SET_NEWLETTER":
+      return{
+        ...state,
+        newsLetterArray : action.customerArray
+      }
+    case "SET_SLIDER":
+      return{...state,
+        sliderArray:action.sliderArray
+      }
+    case "SET_ABOUT":
+      return{...state,
+        aboutArray:action.aboutArray
+      }
+    case "SET_SERVICE":
+     return{...state,
+      serviceArray:action.serviceArray
+     }
+     case "SET_WORK":
+      return{...state,
+        workArray:action.workArray
+      }
+      case "SET_TEAM":
+        return{...state,
+          teamArray:action.teamArray
+        }
+      case "SET_CLIENT":
+        return{...state,
+          clientArray:action.clientArray
+        } 
+      case "SET_CONTACT":
+        return{...state,
+        contactArray:action.contactArray
+        } 
+      case "SET_FOOTER":
+        return{...state,
+          footerArray:action.footerArray
+        } 
     // Add more cases for other actions if needed
     default:
       return state;

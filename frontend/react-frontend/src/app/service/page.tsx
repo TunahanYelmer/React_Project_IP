@@ -9,7 +9,7 @@ import { DataProvider } from "../../../context/DataContext";
 import Work from "../../../components/Work";
 import Service from "../../../components/Service";
 
-const AboutPage: React.FC = () => {
+const ServicePage: React.FC = () => {
   return (
     <DataProvider>
       <div>
@@ -17,7 +17,7 @@ const AboutPage: React.FC = () => {
           <Header />
         </div>
         <div className="bg-white py-0 my-0 h-full ">
-          <Service>
+          <Service isButtonExists={false}/>
         </div>
         <div><Work /></div>
 
@@ -31,4 +31,4 @@ const AboutPage: React.FC = () => {
   );
 };
 
-export default AboutPage;
+export default ServicePage;

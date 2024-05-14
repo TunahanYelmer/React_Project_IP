@@ -1,90 +1,100 @@
-import React from 'react';
+"use client"
+import React, { useState } from "react";
+import Link from "next/link";
 
-interface NavLinkProps {
-  to: string;
+interface NavItemProps {
+  href: string;
   children: React.ReactNode;
-  isActive: boolean;
 }
 
-const NavLink: React.FC<NavLinkProps> = ({ to, children, isActive }) => {
+const AdminNavbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <li className={`nav-item ${isActive ? 'active' : ''}`}>
-      <a className="nav-link" href={to}>
-        {children}
-      </a>
-    </li>
-  );
-};
+    <nav className="bg-custom-blue">
+      <div className="font-bold text-white flex px-4 py-3 items-center justify-center  text-2xl"><h1>Seotech</h1></div>
+      <div className="max-w-7xl mx-auto px-4 py-3 items-center justify-center flex text-white ">
+        
+        <div className="flex justify-between items-center">
+          <div className="flex items-center">
+            <Link href="/admin/contentUpdate">
+              Update Content
+            </Link>
+          </div>
+          <div className="hidden md:block">
+            <ul className="flex space-x-4 m-2">
+              <NavItem href="/admin">Dashboard</NavItem>
+              <NavItem href="/admin/users">Users</NavItem>
+              <NavItem href="/admin/UpdateContent">Update Content</NavItem>
 
-const NavBar: React.FC = () => {
-  return (
-    <nav className="navbar navbar-expand-lg custom_nav-container bg-white rounded-lg shadow-md">
-      <a className="navbar-brand" href="#">
-        <span>Seotech</span>
-      </a>
-
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="s-1"> </span>
-        <span className="s-2"> </span>
-        <span className="s-3"> </span>
-      </button>
-
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <div className="d-flex mx-auto flex-column flex-lg-row align-items-center">
-          <ul className="navbar-nav">
-            <NavLink to="/admin/content" isActive={true}>
-              Content
-            </NavLink>
-            <NavLink to="/admin/users" isActive={false}>
-              Users
-            </NavLink>
-            <NavLink to="/admin/messages" isActive={false}>
-              Messages
-            </NavLink>
-            <NavLink to="/admin/newsfeed" isActive={false}>
-              News
-            </NavLink>
+            </ul>
+          </div>
+          <div className="md:hidden">
+            <button
+              onClick={toggleNavbar}
+              className="text-white focus:outline-none"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {isOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      {isOpen && (
+        <div className="md:hidden">
+          <ul className="bg-gray-800">
+            <NavItemMobile href="/admin/dashboard">Dashboard</NavItemMobile>
+            <NavItemMobile href="/admin/users">Users</NavItemMobile>
+            <NavItemMobile href="/admin/products">Products</NavItemMobile>
+            <NavItemMobile href="/admin/orders">Orders</NavItemMobile>
           </ul>
         </div>
-      </div>
-
-      <div className="navbar-nav ml-auto">
-        <div className="nav-item">
-          <span className="nickname-label"></span>
-        </div>
-        <div className="nav-item">
-          <a className="logout-button" href="#">
-            Logout
-          </a>
-        </div>
-        <div className="nav-item">
-          <a className="login-button" href="#">
-            Login
-          </a>
-        </div>
-      </div>
+      )}
     </nav>
   );
 };
 
-const Header: React.FC = () => {
+const NavItem: React.FC<NavItemProps> = ({ href, children }) => {
   return (
-    <header className="admin_header_section">
-      <div className="admin-header">
-        <div className="container-fluid">
-          <NavBar />
-        </div>
-      </div>
-    </header>
+    <li>
+      <Link href={href}>
+        {children}
+      </Link>
+    </li>
   );
 };
 
-export default Header;
+const NavItemMobile: React.FC<NavItemProps> = ({ href, children }) => {
+  return (
+    <li>
+      <Link href={href}>
+      </Link>
+    </li>
+  );
+};
+
+export default AdminNavbar;

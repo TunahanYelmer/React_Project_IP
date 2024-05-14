@@ -7,10 +7,11 @@ app = Flask(__name__)
 mongo = init_db(app)
 
 # Customer Routes
-@app.route('/customer', methods=['GET'])
 def get_customers():
     customers = mongo.customer.find()
-    return jsonify({"customers": [customer for customer in customers]}), 200
+    # Create a list of dictionaries containing customer data along with their IDs
+    customers_with_ids = [{"_id": str(customer['_id']), **customer} for customer in customers]
+    return jsonify({"customers": customers_with_ids}), 200
 
 @app.route('/customer', methods=['POST'])
 def create_customer():

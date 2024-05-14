@@ -9,7 +9,10 @@ interface ServiceProps {
   heading: string;
   paragraph: string;
 }
+interface Button {
+  isButtonExists: Boolean
 
+}
 const Services: ServiceProps = {
   services: [
     {
@@ -42,7 +45,7 @@ const Services: ServiceProps = {
 interface ServiceProps {
   isButtonExist?: boolean;
 }
-const Service: React.FC<ServiceProps> = ({ isButtonExist }) => {
+const Service: React.FC<Button> = ({ isButtonExists }) => {
   return (
     <section className="bg-custom-blue py-20">
       <div className="container mx-auto">
@@ -67,7 +70,7 @@ const Service: React.FC<ServiceProps> = ({ isButtonExist }) => {
             </div>
           ))}
         </div>
-        <div className="flex justify-center my-8">
+        <div className={`flex justify-center my-8 ${isButtonExists ? "" : "hidden"}`}>
           <button className="bg-custom-yellow py-2 px-6 rounded-full">
             <a href="/services">Read More</a>
           </button>

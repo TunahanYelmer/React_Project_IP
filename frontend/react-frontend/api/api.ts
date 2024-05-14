@@ -14,15 +14,26 @@ import {
 } from "../context/reducer";
 
 // Define the base URL of your API
-const BASE_URL = "https://example.com/api";
+const BASE_URL = "http://127.0.0.1:5000";
 
 // Function to fetch data from the customer endpoint
-export async function fetchCustomerData(): Promise<AxiosResponse<Customer[]>> {
+export async function fetchCustomerDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<Customer[]>(`${BASE_URL}/customer`);
-    return response;
+      const response: AxiosResponse<{ customers: Customer[] }> = await axios.get<{ customers: Customer[] }>(
+          `${BASE_URL}/customer`
+      );
+
+      // Extract customers array from response data
+      const customers: Customer[] = response.data.customers;
+
+      // Dispatch the action with the customers
+      dispatch({
+          type: "SET_CUSTOMER",
+          customers
+      });
   } catch (error) {
-    throw new Error(`Error fetching customer data: ${error}`);
+      console.error(`Error fetching customer data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
@@ -36,6 +47,7 @@ export async function postCustomerData(
       customerData
     );
     return response;
+    
   } catch (error) {
     throw new Error(`Error posting customer data: ${error}`);
   }
@@ -65,12 +77,21 @@ export async function deleteCustomerData(customerId: string): Promise<void> {
     throw new Error(`Error deleting customer data: ${error}`);
   }
 }
-export async function fetchNewsletterData(): Promise<AxiosResponse<NewsLetter[]>> {
+export async function fetchNewsletterDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<NewsLetter[]>(`${BASE_URL}/newsletter`);
-    return response;
+      const response: AxiosResponse<NewsLetter[]> = await axios.get<NewsLetter[]>(`${BASE_URL}/newsletter`);
+
+      // Extract newsletter array from response data
+      const newsletters: NewsLetter[] = response.data;
+
+      // Dispatch the action with the newsletters
+      dispatch({
+          type: "SET_NEWSLETTER",
+          newsletters
+      });
   } catch (error) {
-    throw new Error(`Error fetching customer data: ${error}`);
+      console.error(`Error fetching newsletter data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
@@ -113,12 +134,21 @@ export async function deleteNewsletterData(newsletterID: string,): Promise<void>
     throw new Error(`Error deleting customer data: ${error}`);
   }
 }
-export async function fetchSliderData(): Promise<AxiosResponse<Slider[]>> {
+export async function fetchSliderDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<Slider[]>(`${BASE_URL}/slider`);
-    return response;
+      const response: AxiosResponse<Slider[]> = await axios.get<Slider[]>(`${BASE_URL}/slider`);
+
+      // Extract slider array from response data
+      const sliders: Slider[] = response.data;
+
+      // Dispatch the action with the sliders
+      dispatch({
+          type: "SET_SLIDER",
+          sliders
+      });
   } catch (error) {
-    throw new Error(`Error fetching slider data: ${error}`);
+      console.error(`Error fetching slider data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
@@ -162,12 +192,21 @@ export async function deleteSliderData(sliderID: string): Promise<void> {
     throw new Error(`Error deleting customer data: ${error}`);
   }
 }
-export async function fetchAboutData(): Promise<AxiosResponse<About[]>> {
+export async function fetchAboutDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<About[]>(`${BASE_URL}/about`);
-    return response;
+      const response: AxiosResponse<About[]> = await axios.get<About[]>(`${BASE_URL}/about`);
+
+      // Extract about array from response data
+      const aboutData: About[] = response.data;
+
+      // Dispatch the action with the about data
+      dispatch({
+          type: "SET_ABOUT",
+          aboutData
+      });
   } catch (error) {
-    throw new Error(`Error fetching about data: ${error}`);
+      console.error(`Error fetching about data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
@@ -210,12 +249,21 @@ export async function deleteAboutData(aboutId: string): Promise<void> {
     throw new Error(`Error deleting about data: ${error}`);
   }
 }
-export async function fetchServiceData(): Promise<AxiosResponse<Service[]>> {
+export async function fetchServiceDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<Service[]>(`${BASE_URL}/service`);
-    return response;
+      const response: AxiosResponse<Service[]> = await axios.get<Service[]>(`${BASE_URL}/service`);
+
+      // Extract service array from response data
+      const serviceData: Service[] = response.data;
+
+      // Dispatch the action with the service data
+      dispatch({
+          type: "SET_SERVICE",
+          serviceData
+      });
   } catch (error) {
-    throw new Error(`Error fetching service data: ${error}`);
+      console.error(`Error fetching service data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
@@ -258,12 +306,22 @@ export async function deleteServiceData(serviceId: string): Promise<void> {
     throw new Error(`Error deleting service data: ${error}`);
   }
 }
-export async function fetchWorkData(): Promise<AxiosResponse<Work[]>> {
+
+export async function fetchWorkDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<Work[]>(`${BASE_URL}/work`);
-    return response;
+      const response: AxiosResponse<Work[]> = await axios.get<Work[]>(`${BASE_URL}/work`);
+
+      // Extract work array from response data
+      const workData: Work[] = response.data;
+
+      // Dispatch the action with the work data
+      dispatch({
+          type: "SET_WORK",
+          workData
+      });
   } catch (error) {
-    throw new Error(`Error fetching work data: ${error}`);
+      console.error(`Error fetching work data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
@@ -306,12 +364,21 @@ export async function deleteWorkData(workId: string): Promise<void> {
     throw new Error(`Error deleting work data: ${error}`);
   }
 }
-export async function fetchTeamData(): Promise<AxiosResponse<Team[]>> {
+export async function fetchTeamDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<Team[]>(`${BASE_URL}/team`);
-    return response;
+      const response: AxiosResponse<Team[]> = await axios.get<Team[]>(`${BASE_URL}/team`);
+
+      // Extract team array from response data
+      const teamData: Team[] = response.data;
+
+      // Dispatch the action with the team data
+      dispatch({
+          type: "SET_TEAM",
+          teamData
+      });
   } catch (error) {
-    throw new Error(`Error fetching team data: ${error}`);
+      console.error(`Error fetching team data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
@@ -354,12 +421,21 @@ export async function deleteTeamData(teamId: string): Promise<void> {
     throw new Error(`Error deleting team data: ${error}`);
   }
 }
-export async function fetchClientData(): Promise<AxiosResponse<Client[]>> {
+export async function fetchClientDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<Client[]>(`${BASE_URL}/client`);
-    return response;
+      const response: AxiosResponse<Client[]> = await axios.get<Client[]>(`${BASE_URL}/client`);
+
+      // Extract client array from response data
+      const clientData: Client[] = response.data;
+
+      // Dispatch the action with the client data
+      dispatch({
+          type: "SET_CLIENT",
+          clientData
+      });
   } catch (error) {
-    throw new Error(`Error fetching client data: ${error}`);
+      console.error(`Error fetching client data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
@@ -402,12 +478,21 @@ export async function deleteClientData(clientId: string): Promise<void> {
     throw new Error(`Error deleting client data: ${error}`);
   }
 }
-export async function fetchContactData(): Promise<AxiosResponse<Contact[]>> {
+export async function fetchContactDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<Contact[]>(`${BASE_URL}/contact`);
-    return response;
+      const response: AxiosResponse<Contact[]> = await axios.get<Contact[]>(`${BASE_URL}/contact`);
+
+      // Extract contact array from response data
+      const contactData: Contact[] = response.data;
+
+      // Dispatch the action with the contact data
+      dispatch({
+          type: "SET_CONTACT",
+          contactData
+      });
   } catch (error) {
-    throw new Error(`Error fetching contact data: ${error}`);
+      console.error(`Error fetching contact data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
@@ -450,12 +535,21 @@ export async function deleteContactData(contactId: string): Promise<void> {
     throw new Error(`Error deleting contact data: ${error}`);
   }
 }
-export async function fetchFooterData(): Promise<AxiosResponse<Footer[]>> {
+export async function fetchFooterDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<Footer[]>(`${BASE_URL}/footer`);
-    return response;
+      const response: AxiosResponse<Footer[]> = await axios.get<Footer[]>(`${BASE_URL}/footer`);
+
+      // Extract footer array from response data
+      const footerData: Footer[] = response.data;
+
+      // Dispatch the action with the footer data
+      dispatch({
+          type: "SET_FOOTER",
+          footerData
+      });
   } catch (error) {
-    throw new Error(`Error fetching footer data: ${error}`);
+      console.error(`Error fetching footer data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
@@ -498,12 +592,21 @@ export async function deleteFooterData(footerId: string): Promise<void> {
     throw new Error(`Error deleting footer data: ${error}`);
   }
 }
-export async function fetchUserData(): Promise<AxiosResponse<User[]>> {
+export async function fetchUserDataAndDispatch(dispatch: Function): Promise<void> {
   try {
-    const response = await axios.get<User[]>(`${BASE_URL}/user`);
-    return response;
+      const response: AxiosResponse<User[]> = await axios.get<User[]>(`${BASE_URL}/user`);
+
+      // Extract user array from response data
+      const userData: User[] = response.data;
+
+      // Dispatch the action with the user data
+      dispatch({
+          type: "SET_USER",
+          userData
+      });
   } catch (error) {
-    throw new Error(`Error fetching user data: ${error}`);
+      console.error(`Error fetching user data: ${error}`);
+      // Optionally handle the error here, e.g., dispatch an error action
   }
 }
 
