@@ -38,10 +38,11 @@ def delete_customer(customer_id):
     return jsonify({"message": "Customer deleted successfully"}), 200
 
 # NewsLetter Routes
-@app.route('/newsletter', methods=['GET'])
-def get_subscribers():
+def get_newsletter():
     subscribers = mongo.newsfeed.find()
-    return jsonify({"subscribers": [subscriber for subscriber in subscribers]}), 200
+    # Convert ObjectIDs to strings
+    subscribers_with_ids = [{"_id": str(subscriber['_id']), **subscriber} for subscriber in subscribers]
+    return jsonify({"subscribers": subscribers_with_ids}), 200
 
 @app.route('/newsletter', methods=['POST'])
 def subscribe_to_newsletter():
@@ -63,10 +64,11 @@ def delete_newsletter(newsletter_id):
     return jsonify({"message": "Newsletter deleted successfully"}), 200
 
 # Slider Routes
-@app.route('/slider', methods=['GET'])
 def get_sliders():
     sliders = mongo.slider.find()
-    return jsonify({"sliders": [slider for slider in sliders]}), 200
+    # Convert ObjectIDs to strings
+    sliders_with_ids = [{"_id": str(slider['_id']), **slider} for slider in sliders]
+    return jsonify({"sliders": sliders_with_ids}), 200
 
 @app.route('/slider', methods=['POST'])
 def create_slider():
@@ -94,10 +96,11 @@ def delete_slider(slider_id):
     return jsonify({"message": "Slider deleted successfully"}), 200
 
 # About Routes
-@app.route('/about', methods=['GET'])
 def get_about():
     about = mongo.about.find()
-    return jsonify({"about": [a for a in about]}), 200
+    # Convert ObjectIDs to strings
+    about_with_ids = [{"_id": str(a['_id']), **a} for a in about]
+    return jsonify({"about": about_with_ids}), 200
 
 @app.route('/about', methods=['POST'])
 def create_about():
@@ -127,7 +130,9 @@ def delete_about(about_id):
 @app.route('/service', methods=['GET'])
 def get_services():
     services = mongo.service.find()
-    return jsonify({"services": [service for service in services]}), 200
+    # Convert ObjectIDs to ObjectId type
+    services_with_ids = [{"_id": ObjectId(str(service['_id'])), **service} for service in services]
+    return jsonify({"services": services_with_ids}), 200
 
 @app.route('/service', methods=['POST'])
 def create_service():
@@ -156,10 +161,11 @@ def delete_service(service_id):
     return jsonify({"message": "Service Page deleted successfully"}), 200
 
 # Work Routes
-@app.route('/work', methods=['GET'])
 def get_works():
     works = mongo.work.find()
-    return jsonify({"works": [work for work in works]}), 200
+    # Convert ObjectIDs to ObjectId type
+    works_with_ids = [{"_id": ObjectId(work['_id']), **work} for work in works]
+    return jsonify({"works": works_with_ids}), 200
 
 @app.route('/work', methods=['POST'])
 def create_work():
@@ -188,10 +194,11 @@ def delete_work(work_id):
     return jsonify({"message": "Work deleted successfully"}), 200
 
 # Team Routes
-@app.route('/team', methods=['GET'])
 def get_team():
     team = mongo.team.find()
-    return jsonify({"team": [t for t in team]}), 200
+    # Convert ObjectIDs to ObjectId type
+    team_with_ids = [{"_id": str(t['_id']), **t} for t in team]
+    return jsonify({"team": team_with_ids}), 200
 
 @app.route('/team', methods=['POST'])
 def create_team():
@@ -224,7 +231,9 @@ def delete_team(team_id):
 @app.route('/client', methods=['GET'])
 def get_clients():
     clients = mongo.client.find()
-    return jsonify({"clients": [client for client in clients]}), 200
+    # Convert ObjectIDs to strings
+    clients_with_ids = [{"_id": str(client['_id']), **client} for client in clients]
+    return jsonify({"clients": clients_with_ids}), 200
 
 @app.route('/client', methods=['POST'])
 def create_client():
@@ -250,10 +259,11 @@ def delete_client(client_id):
     return jsonify({"message": "Client deleted successfully"}), 200
 
 # Contact Routes
-@app.route('/contact', methods=['GET'])
 def get_contacts():
     contacts = mongo.contact.find()
-    return jsonify({"contacts": [contact for contact in contacts]}), 200
+    # Convert ObjectIDs to strings
+    contacts_with_ids = [{"_id": str(contact['_id']), **contact} for contact in contacts]
+    return jsonify({"contacts": contacts_with_ids}), 200
 
 @app.route('/contact', methods=['POST'])
 def create_contact():
@@ -278,10 +288,11 @@ def delete_contact(contact_id):
     return jsonify({"message": "Contact deleted successfully"}), 200
 
 # Footer Routes
-@app.route('/footer', methods=['GET'])
 def get_footer():
     footer = mongo.footer.find()
-    return jsonify({"footer": [f for f in footer]}), 200
+    # Convert ObjectIDs to strings
+    footer_with_ids = [{"_id": str(f['_id']), **f} for f in footer]
+    return jsonify({"footer": footer_with_ids}), 200
 
 @app.route('/footer', methods=['POST'])
 def create_footer():
@@ -308,10 +319,11 @@ def delete_footer(footer_id):
     return jsonify({"message": "Footer deleted successfully"}), 200
 
 # User Routes
-@app.route('/user',methods=['GET'])
 def get_users():
     users = mongo.user.find()
-    return jsonify({"users": [user for user in users]}), 200
+    # Convert ObjectIDs to strings
+    users_with_ids = [{"_id": str(user['_id']), **user} for user in users]
+    return jsonify({"users": users_with_ids}), 200
 
 @app.route('/user',methods=['POST'])
 def create_user():

@@ -95,7 +95,7 @@ const Slider: React.FC = () => {
                 <Image
                   src={slide.image}
                   layout="fill"
-                  object-Fit="cover"
+                  object-fit="cover"
                   alt=""
                 />{" "}
               </div>

@@ -14,7 +14,7 @@ export interface State {
 }
 
 export interface Customer {
-  _id: ObjectId
+  _id: string
   name: string;
   email: string;
   subject: string;
@@ -23,13 +23,13 @@ export interface Customer {
 }
 
 export interface NewsLetter {
-  _id: ObjectId
+  _id: string
   email: string;
   dateOfRegister: Date;
 }
 
 export interface Slider {
-  _id: ObjectId
+  _id: string
   title: string;
   description: string;
   contact_link: string;
@@ -38,7 +38,7 @@ export interface Slider {
 }
 
 export interface About {
-  _id: ObjectId
+  _id: string
   title: string;
   description: string;
   read: string;
@@ -46,7 +46,7 @@ export interface About {
 }
 
 export interface Service {
-  _id: ObjectId
+  _id: string
   title: string;
   description: string;
   service_title: string;
@@ -56,7 +56,7 @@ export interface Service {
 }
 
 export interface Work {
-  _id: ObjectId
+  _id: string
   title: string;
   description: string;
   service_title: string;
@@ -66,7 +66,7 @@ export interface Work {
 }
 
 export interface Team {
-  _id: ObjectId
+  _id: string
   name: string;
   description: string;
   image: string;
@@ -77,20 +77,20 @@ export interface Team {
 }
 
 export interface Client {
-  _id: ObjectId
+  _id: string
   name: string;
   description: string;
   image: string;
 }
 
 export interface Contact {
-  _id: ObjectId
+  _id: string
   telephone: string;
   email: string;
 }
 
 export interface Footer {
-  _id: ObjectId
+  _id: string
   link_facebook: string;
   link_twitter: string;
   link_linkedin: string;
@@ -98,7 +98,7 @@ export interface Footer {
 }
 
 export interface User {
-  _id: ObjectId
+  _id: string
   username: string;
   passwrdhash: string;
   email: string;
@@ -109,16 +109,16 @@ export interface User {
 
 export const initialState: State = {
   route: "Home",
-  customerArray: [{_id:new ObjectId, name: "", email: "", subject: "", message: "", dateOfRegister: new Date() }],
-  newsLetterArray: [{_id:new ObjectId, email: "", dateOfRegister: new Date() }],
-  sliderArray: [{_id:new ObjectId, title: "", description: "", contact_link: "", quote_link: "", image: "" }],
-  aboutArray: [{_id:new ObjectId, title: "", description: "", read: "", image: "" }],
-  serviceArray: [{_id:new ObjectId, title: "", description: "", service_title: "", service_description: "", read: "", image: "" }],
-  workArray: [{ _id:new ObjectId,title: "", description: "", service_title: "", service_description: "", read: "", image: "" }],
-  teamArray: [{_id:new ObjectId, name: "", description: "", image: "", link_fb: "", link_tw: "", link_linkedin: "", link_insta: "" }],
-  clientArray: [{_id:new ObjectId, name: "", description: "", image: "" }],
-  contactArray: [{_id:new ObjectId, telephone: "", email: "" }],
-  footerArray: [{_id:new ObjectId, link_facebook: "", link_twitter: "", link_linkedin: "", link_youtube: "" }],
+  customerArray: [{_id:"", name: "", email: "", subject: "", message: "", dateOfRegister: new Date() }],
+  newsLetterArray: [{_id:"", email: "", dateOfRegister: new Date() }],
+  sliderArray: [{_id:"", title: "", description: "", contact_link: "", quote_link: "", image: "" }],
+  aboutArray: [{_id:"", title: "", description: "", read: "", image: "" }],
+  serviceArray: [{_id:"", title: "", description: "", service_title: "", service_description: "", read: "", image: "" }],
+  workArray: [{ _id:"",title: "", description: "", service_title: "", service_description: "", read: "", image: "" }],
+  teamArray: [{_id:"", name: "", description: "", image: "", link_fb: "", link_tw: "", link_linkedin: "", link_insta: "" }],
+  clientArray: [{_id:"", name: "", description: "", image: "" }],
+  contactArray: [{_id:"", telephone: "", email: "" }],
+  footerArray: [{_id:"", link_facebook: "", link_twitter: "", link_linkedin: "", link_youtube: "" }],
 };
 
 
