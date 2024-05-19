@@ -17,9 +17,11 @@ const ServicePage: React.FC = () => {
           <Header />
         </div>
         <div className="bg-white py-0 my-0 h-full ">
-          <Service isButtonExists={false}/>
+          <Service isButtonExists={false} />
         </div>
-        <div><Work /></div>
+        <div className="bg-white">
+          <Work />
+        </div>
 
         <div className="bg-footer-bg bg-white pt-60 bg-cover bg-no-repeat">
           <Contact />

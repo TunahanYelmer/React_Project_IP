@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Link from "next/link";
 
@@ -16,21 +16,16 @@ const AdminNavbar: React.FC = () => {
 
   return (
     <nav className="bg-custom-blue">
-      <div className="font-bold text-white flex px-4 py-3 items-center justify-center  text-2xl"><h1>Seotech</h1></div>
+      <div className="font-bold text-white flex px-4 py-3 items-center justify-center  text-2xl">
+        <h1>Seotech</h1>
+      </div>
       <div className="max-w-7xl mx-auto px-4 py-3 items-center justify-center flex text-white ">
-        
         <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            <Link href="/admin/contentUpdate">
-              Update Content
-            </Link>
-          </div>
           <div className="hidden md:block">
             <ul className="flex space-x-4 m-2">
-              <NavItem href="/admin">Dashboard</NavItem>
-              <NavItem href="/admin/users">Users</NavItem>
               <NavItem href="/admin/UpdateContent">Update Content</NavItem>
-
+              <NavItem href="/admin/users">Users</NavItem>
+              <NavItem href="/admin/newletter">Newsletter</NavItem>
             </ul>
           </div>
           <div className="md:hidden">
@@ -81,9 +76,7 @@ const AdminNavbar: React.FC = () => {
 const NavItem: React.FC<NavItemProps> = ({ href, children }) => {
   return (
     <li>
-      <Link href={href}>
-        {children}
-      </Link>
+      <Link href={href}>{children}</Link>
     </li>
   );
 };
@@ -91,8 +84,7 @@ const NavItem: React.FC<NavItemProps> = ({ href, children }) => {
 const NavItemMobile: React.FC<NavItemProps> = ({ href, children }) => {
   return (
     <li>
-      <Link href={href}>
-      </Link>
+      <Link href={href}></Link>
     </li>
   );
 };

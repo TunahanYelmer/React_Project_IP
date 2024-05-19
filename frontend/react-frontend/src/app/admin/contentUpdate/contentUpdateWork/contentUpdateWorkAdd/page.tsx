@@ -1,27 +1,26 @@
+"use client";
 import React, { useEffect } from "react";
-
-import { postSliderData } from ".../../../api/api";
+import { postWorkData } from "../../../../../../api/api";
 import { useState } from "react";
 
 interface Props {
   id: string;
 }
-
-interface Slider {
-  _id: string;
+export interface Work {
   title: string;
   description: string;
-  contact_link: string;
-  quote_link: string;
+  service_title: string;
+  service_description: string;
+  read: string;
   image: string;
 }
-
-const AddSliderSection: React.FC<Props> = ({ id }) => {
+const EditWorkSection: React.FC<Props> = ({ id }) => {
   const [fileName, setFileName] = useState<string | null>(null);
   const [title, setTitle] = useState("");
+  const [service_description, setServiceDescription] = useState("");
+  const [service_title, setServiceTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [contact_link, setContactLink] = useState("");
-  const [quote_link, setQuoteLink] = useState("");
+  const [read, setRead] = useState("");
   const [image, setImage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,15 +34,15 @@ const AddSliderSection: React.FC<Props> = ({ id }) => {
     } else {
       setImage("");
     }
-    const slider: Slider = {
-      _id: id,
+    const work: Work = {
       title: title,
       description: description,
-      contact_link: contact_link,
-      quote_link: quote_link,
+      service_title: title, // service_title
+      service_description: description, // service_description
+      read: read,
       image: image,
     };
-    await postSliderData(slider);
+    await postWorkData(work);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +57,9 @@ const AddSliderSection: React.FC<Props> = ({ id }) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold text-black mb-5">Update Slider</h1>
+      <h1 className="text-2xl font-bold text-black mb-5">
+        Update Work Section
+      </h1>
       <div className="w-full max-w-md">
         <form
           onSubmit={handleSubmit}
@@ -99,17 +100,33 @@ const AddSliderSection: React.FC<Props> = ({ id }) => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="read"
+              htmlFor="Service_title"
             >
-              Read
+              Service Title
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="read"
+              id="service_title"
               type="text"
-              placeholder="Read"
-              value={contact_link}
-              onChange={(e) => setContactLink(e.target.value)}
+              placeholder="Service Title"
+              value={title}
+              onChange={(e) => setServiceTitle(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="description"
+            >
+              Service Description
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="description"
+              type="text"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setServiceDescription(e.target.value)}
             />
           </div>
           <div className="mb-4">
@@ -124,8 +141,8 @@ const AddSliderSection: React.FC<Props> = ({ id }) => {
               id="read"
               type="text"
               placeholder="Read"
-              value={quote_link}
-              onChange={(e) => setQuoteLink(e.target.value)}
+              value={read}
+              onChange={(e) => setRead(e.target.value)}
             />
           </div>
           <div className="mb-4">
@@ -158,4 +175,4 @@ const AddSliderSection: React.FC<Props> = ({ id }) => {
   );
 };
 
-export default AddSliderSection;
+export default EditWorkSection;

@@ -1,166 +1,179 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import React, { useEffect } from "react";
+import { updateServiceData } from "../../api/api";
+import { useState } from "react";
 
-const schema = yup.object().shape({
-  title: yup.string().required(),
-  service_title: yup.string().required(),
-  service_description: yup.string().required(),
-  read: yup.boolean(),
-  description: yup.string().required(),
-  image: yup.mixed().required(),
-});
-
-interface FormValues {
+interface Props {
+  id: string;
+}
+export interface Work {
+  _id: string;
   title: string;
+  description: string;
   service_title: string;
   service_description: string;
-  read: boolean;
-  description: string;
-  image: FileList;
+  read: string;
+  image: string;
 }
+const EditWorkSection: React.FC<Props> = ({ id }) => {
+  const [fileName, setFileName] = useState<string | null>(null);
+  const [title, setTitle] = useState("");
+  const [service_description, setServiceDescription] = useState("");
+  const [service_title, setServiceTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [read, setRead] = useState("");
+  const [image, setImage] = useState("");
 
-const UpdateWorkSection: React.FC = () => {
-  const { register, handleSubmit, errors } = useForm<FormValues>({
-    resolver: yupResolver(schema),
-  });
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const onSubmit = (data: FormValues) => {
-    // Handle form submission here
-    console.log(data);
+    const formData = new FormData();
+
+    const imageData = formData.get("image") as File;
+    if (imageData) {
+      setImage(imageData.name);
+    } else {
+      setImage("");
+    }
+    const work: Work = {
+      _id: id,
+      title: title,
+      description: description,
+      service_title: title, // service_title
+      service_description: description, // service_description
+      read: read,
+      image: image,
+    };
+    await updateServiceData(id, work);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    console.log(file);
+    if (file) {
+      setImage(file.name); // Access file.name only if file is not null
+    } else {
+      setImage("");
+    }
   };
 
   return (
-    <div className="admin-section update-section bg-white p-6">
-      <div className="admin-container">
-        <div className="admin-col">
-          <div className="admin-div">
-            <h2 className="admin-h2 text-2xl font-bold mb-4">
-              Edit Work Section
-            </h2>
-
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              encType="multipart/form-data"
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-2xl font-bold text-black mb-5">
+        Update Work Section
+      </h1>
+      <div className="w-full max-w-md">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="title"
             >
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 font-bold mb-2"
-                  htmlFor="title"
-                >
-                  Title
-                </label>
-                <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="title"
-                  name="title"
-                  ref={register}
-                />
-                {errors.title && (
-                  <p className="text-red-500">{errors.title.message}</p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 font-bold mb-2"
-                  htmlFor="service_title"
-                >
-                  Service Title
-                </label>
-                <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="service_title"
-                  name="service_title"
-                  ref={register}
-                />
-                {errors.service_title && (
-                  <p className="text-red-500">{errors.service_title.message}</p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 font-bold mb-2"
-                  htmlFor="service_description"
-                >
-                  Service Description
-                </label>
-                <textarea
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="service_description"
-                  name="service_description"
-                  rows={4}
-                  ref={register}
-                />
-                {errors.service_description && (
-                  <p className="text-red-500">
-                    {errors.service_description.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 font-bold mb-2"
-                  htmlFor="read"
-                >
-                  Read
-                </label>
-                <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="read"
-                  name="read"
-                  type="checkbox"
-                  ref={register}
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 font-bold mb-2"
-                  htmlFor="description"
-                >
-                  Description
-                </label>
-                <textarea
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="description"
-                  name="description"
-                  rows={4}
-                  ref={register}
-                />
-                {errors.description && (
-                  <p className="text-red-500">{errors.description.message}</p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 font-bold mb-2"
-                  htmlFor="image"
-                >
-                  Image
-                </label>
-                <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="image"
-                  name="image"
-                  type="file"
-                  ref={register}
-                />
-                {errors.image && (
-                  <p className="text-red-500">{errors.image.message}</p>
-                )}
-              </div>
-              <button
-                className="admin-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Update Work
-              </button>
-            </form>
+              Title
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="title"
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
-        </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="description"
+            >
+              Description
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="description"
+              type="text"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="Service_title"
+            >
+              Service Title
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="service_title"
+              type="text"
+              placeholder="Service Title"
+              value={title}
+              onChange={(e) => setServiceTitle(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="description"
+            >
+              Service Description
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="description"
+              type="text"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setServiceDescription(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="read"
+            >
+              Read
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="read"
+              type="text"
+              placeholder="Read"
+              value={read}
+              onChange={(e) => setRead(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="image"
+            >
+              Image:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Update
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
 };
 
-export default UpdateWorkSection;
+export default EditWorkSection;

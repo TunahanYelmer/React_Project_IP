@@ -1,6 +1,7 @@
+"use client";
 import React, { useEffect } from "react";
 
-import { postSliderData } from ".../../../api/api";
+import { postSliderData } from "../../../../../../api/api";
 import { useState } from "react";
 
 interface Props {
@@ -8,7 +9,6 @@ interface Props {
 }
 
 interface Slider {
-  _id: string;
   title: string;
   description: string;
   contact_link: string;
@@ -36,7 +36,6 @@ const AddSliderSection: React.FC<Props> = ({ id }) => {
       setImage("");
     }
     const slider: Slider = {
-      _id: id,
       title: title,
       description: description,
       contact_link: contact_link,
@@ -58,7 +57,7 @@ const AddSliderSection: React.FC<Props> = ({ id }) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold text-black mb-5">Update Slider</h1>
+      <h1 className="text-2xl font-bold text-black mb-5">Add Slider</h1>
       <div className="w-full max-w-md">
         <form
           onSubmit={handleSubmit}
@@ -107,7 +106,7 @@ const AddSliderSection: React.FC<Props> = ({ id }) => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="read"
               type="text"
-              placeholder="Read"
+              placeholder="Contact Link"
               value={contact_link}
               onChange={(e) => setContactLink(e.target.value)}
             />
@@ -123,7 +122,7 @@ const AddSliderSection: React.FC<Props> = ({ id }) => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="read"
               type="text"
-              placeholder="Read"
+              placeholder="Quote Link"
               value={quote_link}
               onChange={(e) => setQuoteLink(e.target.value)}
             />

@@ -20,7 +20,7 @@ export default function Home() {
         </div>
         <About isButtonExists={true} />
         <Work />
-        <Service />
+        <Service isButtonExists={true} />
         <Team />
         <div className="pt-60 bg-footer-bg bg-cover bg-no-repeat">
           <Contact />

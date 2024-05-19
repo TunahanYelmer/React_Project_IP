@@ -1,5 +1,11 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import { useDataLayerValue } from "../context/DataContext";
+import { State, Action } from "../context/reducer";
+import { useEffect } from "react";
+import { fetchTeamDataAndDispatch } from "../api/api";
+
 import Link from "next/link";
 import fbIcon from "../static/images/fb.png";
 import twitterIcon from "../static/images/twitter.png";
@@ -48,6 +54,17 @@ const TeamProps: Team[] = [
 ];
 
 const Team: React.FC = () => {
+  const [{ teamArray }, dispatch]: [State, React.Dispatch<Action>] =
+    useDataLayerValue();
+  useEffect(() => {
+    fetchTeamDataAndDispatch(dispatch)
+      .then(() => {
+        console.log("Team data fetched successfully");
+      })
+      .catch((error) => {
+        console.error("Team data Undefined", error);
+      });
+  }, [dispatch]);
   return (
     <section className="flex flex-col items-center justify-center  py-12">
       <div className="m-10">
@@ -60,45 +77,51 @@ const Team: React.FC = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-center">
-        {TeamProps.map((team, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center justify-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"
-          >
-            <div className="flex justify-center items-center bg-custom-blue h-40   w-72  rounded-2xl m-10 -rotate-12">
-              <div className="flex items-center justify-center rotate-12 w-60 h-60">
-                {/* Here you can replace this text with your backend image */}
-                <Image src={fbIcon} height={225} width={225} alt="" />
-              </div>
-            </div>
-            <div className="container mx-auto flex flex-col items-center justify-center text-black">
-              <div className="font-bold text-xl text-center">{team.name}</div>
-              <div className="text-base text-center">{team.description}</div>
-              <div className="flex items-center justify-center mt-4">
-                <div className="flex m-1">
-                  <a href={team.link_fb}>
-                    <Image src={fbIcon} height={33} width={33} alt="" />
-                  </a>
-                </div>
-                <div className="flex m-1">
-                  <a href={team.link_tw}>
-                    <Image src={twitterIcon} height={33} width={33} alt="" />
-                  </a>
-                </div>
-                <div className="flex m-1">
-                  <a href={team.link_insta}>
-                    <Image src={instaIcon} height={33} width={33} alt="" />
-                  </a>
-                </div>
-                <div className="flex m-1">
-                  <a href={team.link_linkedin}>
-                    <Image src={linkedinIcon} height={33} width={33} alt="" />
-                  </a>
+        {teamArray &&
+          teamArray.map((team, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center justify-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"
+            >
+              <div className="flex justify-center items-center bg-custom-blue h-40   w-72  rounded-2xl m-10 -rotate-12">
+                <div className="flex items-center justify-center rotate-12 w-60 h-60">
+                  {/* Here you can replace this text with your backend image */}
+                  <Image
+                    src={`/frontend/react-frontend/static/images/${team.image}`}
+                    height={225}
+                    width={225}
+                    alt=""
+                  />
                 </div>
               </div>
+              <div className="container mx-auto flex flex-col items-center justify-center text-black">
+                <div className="font-bold text-xl text-center">{team.name}</div>
+                <div className="text-base text-center">{team.description}</div>
+                <div className="flex items-center justify-center mt-4">
+                  <div className="flex m-1">
+                    <a href={team.link_fb}>
+                      <Image src={fbIcon} height={33} width={33} alt="" />
+                    </a>
+                  </div>
+                  <div className="flex m-1">
+                    <a href={team.link_tw}>
+                      <Image src={twitterIcon} height={33} width={33} alt="" />
+                    </a>
+                  </div>
+                  <div className="flex m-1">
+                    <a href={team.link_insta}>
+                      <Image src={instaIcon} height={33} width={33} alt="" />
+                    </a>
+                  </div>
+                  <div className="flex m-1">
+                    <a href={team.link_linkedin}>
+                      <Image src={linkedinIcon} height={33} width={33} alt="" />
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </section>
   );

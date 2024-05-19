@@ -1,14 +1,11 @@
-import React from 'react'
-import Header from '../../../components/admin/Header'
-import Footer from '../../../components/admin/Footer'
+"use client";
+import { useRouter } from "next/navigation";
 
-function AdminPage() {
-    return (
-        <div>
-            <Header />
-            <Footer />
-        </div>
-    )
-}
+const RedirectComponent = () => {
+  const router = useRouter();
 
-export default AdminPage
+  router.push("/admin/contentUpdate");
+  return <div>Redirecting...</div>;
+};
+
+export default RedirectComponent;

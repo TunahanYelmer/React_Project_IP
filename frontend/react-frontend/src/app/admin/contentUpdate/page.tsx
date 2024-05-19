@@ -1,10 +1,16 @@
-import React from 'react'
-import Content from '../../../../components/admin/Content'
+import React from "react";
+import ContentUpdate from "../../../../components/admin/ContentUpdate";
+import { DataProvider } from "../../../../context/DataContext";
 
 function UpdateContentPage() {
   return (
-    <div> <Content/> </div>
-  )
+    <DataProvider>
+      <div className="bg-white">
+        {" "}
+        <ContentUpdate />{" "}
+      </div>
+    </DataProvider>
+  );
 }
 
-export default UpdateContentPage
+export default UpdateContentPage;

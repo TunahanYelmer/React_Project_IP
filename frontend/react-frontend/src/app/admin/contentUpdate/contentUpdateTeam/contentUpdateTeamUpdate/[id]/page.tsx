@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import ContentUpdateSlider from "../../../../../../../components/admin/ContentUpdateAbout";
+import ContentUpdateTeam from "../../../../../../../components/admin/ContentUpdateAbout";
 import { DataProvider } from "../../../../../../../context/DataContext";
 
 const ContentUpdateTeamUpdate = ({ params }: { params: { id: String } }) => {
@@ -13,7 +13,7 @@ const ContentUpdateTeamUpdate = ({ params }: { params: { id: String } }) => {
   return (
     <DataProvider>
       <div>
-        <ContentUpdateSlider id={params.id} />
+        <ContentUpdateTeam id={params.id} />
       </div>
     </DataProvider>
   );

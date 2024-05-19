@@ -1,102 +1,90 @@
-import React from 'react';
-
-interface FormValues {
-  username: string;
-  password: string;
-}
-
-interface FormProps {
-  formValues: FormValues;
-  onSubmit: (values: FormValues) => void;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-const Form: React.FC<FormProps> = ({ formValues, onSubmit, onChange }) => {
-  return (
-    <form onSubmit={(event) => onSubmit(formValues)}>
-      <div className="admin-form">
-        <label className="admin-label" htmlFor="username">
-          Username
-        </label>
-        <input
-          className="admin-input"
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Username:"
-          value={formValues.username}
-          onChange={onChange}
-        />
-      </div>
-
-      <div className="admin-form">
-        <label className="admin-label" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="admin-input"
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Password:"
-          value={formValues.password}
-          onChange={onChange}
-        />
-      </div>
-
-      <div className="admin-button-container">
-        <button className="admin-button" type="submit">
-          Login
-        </button>
-      </div>
-
-      <div className="admin-small">
-        <p>
-          <a className="admin-a" href="#!">
-            Forgot password?
-          </a>
-        </p>
-      </div>
-    </form>
-  );
-};
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
+import { Login } from "../../api/api";
 
 const LoginPage: React.FC = () => {
-  const [formValues, setFormValues] = React.useState<FormValues>({
-    username: '',
-    password: '',
-  });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (values: FormValues) => {
-    console.log('Form submitted:', values);
-  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const username = formData.get("username") as string;
+    const password = formData.get("password") as string;
+    setUsername(username);
+    setPassword(password);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues({
-      ...formValues,
-      [event.target.name]: event.target.value,
-    });
+    try {
+      const response = await Login(username, password);
+      console.log(`Login data posted successfully: ${response}`);
+      // handle successful response here
+    } catch (error) {
+      console.error(`Error posting login data: ${error}`);
+      // handle error here
+    }
   };
 
   return (
-    <div className="admin-section">
-      <div className="admin-container">
-        <div className="admin-col">
-          <div className="admin-div">
-            <h2 className="admin-h2">Login</h2>
-            <p className="admin-p">Please enter your login and password!</p>
-            <Form formValues={formValues} onSubmit={handleSubmit} onChange={handleChange} />
+    <div className="min-h-screen flex flex-col items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full bg-gray-100 p-12 rounded-xl border  shadow-md space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Admin Login
+          </h2>
+        </div>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <input type="hidden" name="remember" value="true" />
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div className="m-4">
+              <label htmlFor="username" className="sr-only">
+                Username
+              </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="m-4">
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
           </div>
 
-          <div className="admin-div">
-            <p className="admin-p">
-              Don't have an account?
-              <a href="#" className="admin-a-bold">
-                Sign Up
-              </a>
-            </p>
+          <div className="m-4">
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Sign in
+            </button>
           </div>
-        </div>
+        </form>
+      </div>
+      <div className="max-w-md w-full m-10 flex text-start  text-black bg-gray-100 p-12 rounded-xl border  shadow-md space-y-8">
+        {" "}
+        <p className="flex">Hesabiniz Yok mu ?</p>
+        <p className="text-blue-500 flex ">
+          {" "}
+          <Link href={"admin/register"}>Kayıt Ol</Link>
+        </p>
       </div>
     </div>
   );

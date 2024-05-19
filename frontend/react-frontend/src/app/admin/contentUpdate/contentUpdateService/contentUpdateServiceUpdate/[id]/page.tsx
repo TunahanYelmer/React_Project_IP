@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import ContentUpdateSlider from "../../../../../../../components/admin/ContentUpdateAbout";
+import ContentUpdateService from "../../../../../../../components/admin/ContentUpdateService";
 import { DataProvider } from "../../../../../../../context/DataContext";
 
-const ContentUpdateTeamUpdate = ({ params }: { params: { id: String } }) => {
+const ContentUpdateAboutUpdate = ({ params }: { params: { id: String } }) => {
   if (typeof params.id !== "string") {
     // Handle the case where id is not a string (it could be undefined or an array)
     return null;
@@ -13,10 +13,10 @@ const ContentUpdateTeamUpdate = ({ params }: { params: { id: String } }) => {
   return (
     <DataProvider>
       <div>
-        <ContentUpdateSlider id={params.id} />
+        <ContentUpdateService id={params.id} />
       </div>
     </DataProvider>
   );
 };
 
-export default ContentUpdateTeamUpdate;
+export default ContentUpdateAboutUpdate;

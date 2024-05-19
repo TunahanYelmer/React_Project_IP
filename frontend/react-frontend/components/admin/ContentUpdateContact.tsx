@@ -1,75 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
+import { updateContactData } from "../../api/api";
 
-interface FormElement {
-  name: string;
-  label: string;
-  value: string;
+interface Props {
+  id: string;
 }
 
-interface FormProps {
-  formElements: FormElement[];
-  formAction: string;
-  formMethod: string;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+interface Contact {
+  _id: string;
+  telephone: string;
+  email: string;
 }
 
-const Form: React.FC<FormProps> = ({
-  formElements,
-  formAction,
-  formMethod,
-  onSubmit,
-}) => {
-  return (
-    <form className="admin-form" onSubmit={onSubmit} action={formAction} method={formMethod} encType="multipart/form-data">
-      {formElements.map((element, index) => (
-        <div key={index}>
-          <label htmlFor={element.name} className="admin-form-label">
-            {element.label}
-          </label>
-          <input
-            className="admin-form-input"
-            type="text"
-            id={element.name}
-            name={element.name}
-            value={element.value}
-          />
-        </div>
-      ))}
+const EditContactSection: React.FC<Props> = ({ id }) => {
+  const [telephone, setTelephone] = useState("");
+  const [email, setEmail] = useState("");
 
-      <button className="admin-contact-button" type="submit">
-        Update Contact
-      </button>
-    </form>
-  );
-};
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-const EditContactSection: React.FC = () => {
-  const formElements: FormElement[] = [
-    { name: "telephone", label: "Telephone", value: "123-456-7890" },
-    { name: "email", label: "Email", value: "contact@example.com" },
-  ];
+    const formData = new FormData();
+    const contact: Contact = {
+      _id: id,
+      telephone: telephone,
+      email: email,
+    };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Handle form submission logic here.
+    await updateContactData(id, contact);
   };
 
   return (
-    <section className="admin-section update-section">
-      <div className="admin-container">
-        <div className="admin-col">
-          <div className="admin-div">
-            <h2 className="admin-h2">Edit Contact Section</h2>
-            <Form
-              formElements={formElements}
-              formAction="/admin/content/update/contact"
-              formMethod="post"
-              onSubmit={onSubmit}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-2xl font-bold text-black mb-5">
+        Update Contact Section
+      </h1>
+      <div className="w-full max-w-md">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="telephone"
+            >
+              Telephone
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="telephone"
+              type="text"
+              placeholder="Telephone"
+              value={telephone}
+              onChange={(e) => setTelephone(e.target.value)}
             />
           </div>
-        </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="description"
+            >
+              Email
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="description"
+              type="text"
+              placeholder="Description"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Update
+            </button>
+          </div>
+        </form>
       </div>
-    </section>
+    </div>
   );
 };
 

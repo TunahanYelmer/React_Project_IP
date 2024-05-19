@@ -1,89 +1,122 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDataLayerValue } from "../../context/DataContext";
+import { updateClientData } from "../../api/api";
 
-interface FormElement {
+interface Props {
+  id: string;
+}
+
+interface Client {
+  _id: string;
   name: string;
-  label: string;
-  value: string;
+  description: string;
+  image: string;
 }
 
-interface FormProps {
-  formElements: FormElement[];
-  formAction: string;
-  formMethod: string;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-}
+const EditClientSection: React.FC<Props> = ({ id }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
 
-const Form: React.FC<FormProps> = ({
-  formElements,
-  formAction,
-  formMethod,
-  onSubmit,
-}) => {
-  return (
-    <form className="admin-form" onSubmit={onSubmit} action={formAction} method={formMethod} encType="multipart/form-data">
-      {formElements.map((element, index) => (
-        <div key={index}>
-          <label htmlFor={element.name} className="admin-form-label">
-            {element.label}
-          </label>
-          {element.name === "image" ? (
-            <input
-              className="admin-form-input image-input"
-              type="file"
-              id={element.name}
-              name={element.name}
-              accept="image/*"
-            />
-          ) : (
-            <input
-              className="admin-form-input"
-              type="text"
-              id={element.name}
-              name={element.name}
-              value={element.value}
-            />
-          )}
-        </div>
-      ))}
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      <button className="admin-button" type="submit">
-        Update Client
-      </button>
-    </form>
-  );
-};
+    const formData = new FormData();
+    const client: Client = {
+      _id: id,
+      name: name,
+      description: description,
+      image: image,
+    };
+    const imageData = formData.get("image") as File;
+    if (imageData) {
+      setImage(imageData.name);
+    } else {
+      setImage("");
+    }
 
-const EditClientSection: React.FC = () => {
-  const formElements: FormElement[] = [
-    { name: "title", label: "Title", value: "Client Title" },
-    { name: "client_title", label: "Client Title", value: "Client Client Title" },
-    { name: "client_description", label: "Client Description", value: "Client Client Description" },
-    { name: "read", label: "Read", value: "Client Read" },
-    { name: "description", label: "Description", value: "Client Description" },
-    { name: "image", label: "Image", value: "" },
-  ];
+    await updateClientData(id, client);
+  };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Handle form submission logic here.
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    console.log(file);
+    if (file) {
+      setImage(file.name); // Access file.name only if file is not null
+    } else {
+      setImage("");
+    }
   };
 
   return (
-    <section className="admin-section update-section">
-      <div className="admin-container">
-        <div className="admin-col">
-          <div className="admin-div">
-            <h2 className="admin-h2">Edit Client Section</h2>
-            <Form
-              formElements={formElements}
-              formAction="/admin/content/update/client"
-              formMethod="post"
-              onSubmit={onSubmit}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-2xl font-bold text-black mb-5">
+        Update Client Section
+      </h1>
+      <div className="w-full max-w-md">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="title"
+            >
+              Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="title"
+              type="text"
+              placeholder="Title"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
-        </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="description"
+            >
+              Description
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="description"
+              type="text"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="image"
+            >
+              Image:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Update
+            </button>
+          </div>
+        </form>
       </div>
-    </section>
+    </div>
   );
 };
 
